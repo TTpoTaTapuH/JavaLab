@@ -1,7 +1,7 @@
 package laba4;
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
+import java.util.Date;
 
 public class laba4_c implements Runnable{
     public static int PORT = 8887;
@@ -27,18 +27,18 @@ public class laba4_c implements Runnable{
                 try{
                     //проверка файла
                     if(!f1.exists()) f1.createNewFile();
-                    PrintWriter pw = new PrintWriter(history_client);
+                    FileWriter pw = new FileWriter(history_client, true);
                     try{
-                        pw.println("Последние операции:");
                         out.println("1+");
-                        out.println("10+");
+                        out.println("1+");
                         out.println("15-");
                         out.println("19+");
-                        out.println("10-");
-                        out.println("8=");
+                        out.println("97-");
+                        out.println("81=");
                         String str = in.readLine();
                         System.out.println(str);
-                        pw.print(str);
+                        Date date = new Date();
+                        pw.write(date.toString()+":   " + str+"\n");
                         socket.close();
                     }finally{pw.close();}
                 }catch(IOException e){throw new RuntimeException();}
@@ -63,3 +63,4 @@ public class laba4_c implements Runnable{
             System.out.println("Введи 3 аргумента!");
     }
 }
+
