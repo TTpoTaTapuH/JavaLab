@@ -3,6 +3,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.lang.String;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,7 +60,7 @@ public class laba4_s {
 }
 //класс для сервера
 class Listen implements Runnable{
-    String regex="^[0-9]=$"; //регулярка для конца
+    String regex="^[0-9]+=$"; //регулярка для конца
     Pattern pattern =Pattern.compile(regex); //регяларка
     Matcher matcher = null; //сравнение
     Socket socket;
@@ -87,12 +88,13 @@ class Listen implements Runnable{
                 try{
                     //проверка файла
                     if(!f1.exists()) f1.createNewFile();
-                    PrintWriter pw = new PrintWriter(history_file);
+                    FileWriter pw = new FileWriter(history_file,true);
                     try{
-                        pw.println("Последние операции:");
+                        pw.write("Последние операции:\n");
                         while (true) {
+                            Date date = new Date();
                             String str = in.readLine();
-                            pw.print(str);
+                            pw.write(date.toString() + ":   " + str + "\n");
                             //проверка конца передачи
                             matcher = pattern.matcher(str);
                             stroka += str;
